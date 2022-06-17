@@ -1,5 +1,5 @@
 {
-  "name": "react-native-whiteboard",
+  "name": "@netless/react-native-whiteboard",
   "version": "0.1.0",
   "description": "interactive whiteboard for react-native",
   "main": "lib/commonjs/index",
@@ -36,18 +36,22 @@
     "ios",
     "android"
   ],
-  "repository": "https://github.com/vince-hz/react-native-whiteboard",
-  "author": "netless-io <xuyunshi@agora.io> (https://github.com/vince-hz)",
+  "repository": "https://github.com/netless-io/react-native-whiteboard",
+  "author": "netless-io <whiteboard@agora.io> (https://github.com/netless-io)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/vince-hz/react-native-whiteboard/issues"
+    "url": "https://github.com/netless-io/react-native-whiteboard/issues"
   },
-  "homepage": "https://github.com/vince-hz/react-native-whiteboard#readme",
+  "homepage": "https://github.com/netless-io/react-native-whiteboard#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "dependencies": {
+    "@netless/react-native-bridge": "^0.0.6"
+  },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
+    "@netless/whiteboard-bridge-types": "^0.1.2",
     "@react-native-community/eslint-config": "^2.0.0",
     "@release-it/conventional-changelog": "^2.0.0",
     "@types/jest": "^26.0.0",
@@ -100,35 +104,12 @@
       }
     }
   },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "@react-native-community",
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "quoteProps": "consistent",
-          "singleQuote": true,
-          "tabWidth": 2,
-          "trailingComma": "es5",
-          "useTabs": false
-        }
-      ]
-    }
-  },
   "eslintIgnore": [
     "node_modules/",
     "lib/"
   ],
-  "prettier": {
-    "quoteProps": "consistent",
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
+  "resolutions": {
+    "@types/react": "^16.9.19"
   },
   "react-native-builder-bob": {
     "source": "src",
