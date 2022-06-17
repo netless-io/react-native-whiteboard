@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {  StyleSheet, View } from 'react-native';
-import { Room, WhiteboardView, SDK, SDKConfig, RoomCallbackHandler, SDKCallbackHandler } from 'react-native-whiteboard';
+import { Room, WhiteboardView, SDK, SDKConfig, RoomCallbackHandler, SDKCallbackHandler } from '@netless/react-native-whiteboard';
 import { Panel } from './Panel';
 import { createWBStore } from './WBStore';
 
