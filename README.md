@@ -1,21 +1,28 @@
-# react-native-whiteboard
+# @netless/react-native-whiteboard
 
 interactive whiteboard for react-native
 
 ## Installation
 
 ```sh
-npm install react-native-whiteboard
+npm install @netless/react-native-whiteboard
 ```
 
 ## Usage
 
-```js
-import { multiply } from "react-native-whiteboard";
+```ts
+import { WhiteboardView } from '@netless/react-native-whiteboard';
 
-// ...
-
-const result = await multiply(3, 7);
+<WhiteboardView 
+    sdkConfig={{
+        appIdentifier: 'some-appIdentifier'
+    }}
+    roomConfig={{
+        uid: 'some-uid', 
+        uuid: 'some-uuid', 
+        roomToken: 'some-token'
+    }}
+/>
 ```
 
 ## Contributing
