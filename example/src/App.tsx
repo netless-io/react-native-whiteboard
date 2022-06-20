@@ -1,14 +1,9 @@
 import * as React from 'react';
 import {  StyleSheet, View } from 'react-native';
-import { Room, WhiteboardView, SDK, SDKConfig, RoomCallbackHandler, SDKCallbackHandler } from '@netless/react-native-whiteboard';
+import { Room, WhiteboardView, SDK, SDKConfig, RoomCallbackHandler, SDKCallbackHandler } from 'react-native-whiteboard';
 import { Panel } from './Panel';
 import { createWBStore } from './WBStore';
-
-const appIdentifier = ''
-const uuid = ''
-const roomToken = ''
-const uid = '0'
-const userPayload = { avatar: "" }
+import { appIdentifier, roomToken, uid, userPayload, uuid } from './roomConst';
 
 let room: Room | undefined;
 let sdk: SDK | undefined;
