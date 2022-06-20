@@ -664,18 +664,6 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@floating-ui/core@^0.7.3":
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-0.7.3.tgz#d274116678ffae87f6b60e90f88cc4083eefab86"
-  integrity sha512-buc8BXHmG9l82+OQXOFU3Kr2XQx9ys01U/Q9HMIrZ300iLc8HLMgh7dcCqgYzAzf4BkoQvDcXf5Y+CuEZ5JBYg==
-
-"@floating-ui/react-native@^0.7.1":
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/@floating-ui/react-native/-/react-native-0.7.1.tgz#c43eef66dfb80aa30eb5cb5df2535e169d878083"
-  integrity sha512-Tr/jxy6/GCEtYjhmraYEEAzLWUGdNqEhaBJTKN/ecwpU28hvQyrS6/rN3iREsLC9gzgOQJq8Tn4qiIp2K8Gl5w==
-  dependencies:
-    "@floating-ui/core" "^0.7.3"
-
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"

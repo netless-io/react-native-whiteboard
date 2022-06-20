@@ -1,4 +1,3 @@
-import { shift, useFloating } from '@floating-ui/react-native';
 import { Slider } from '@miblanchard/react-native-slider';
 import type { Appliance, ApplianceShape } from '@netless/whiteboard-bridge-types';
 import React, { useState } from 'react';
@@ -75,28 +74,27 @@ function StrokeSlider(props:{width: number}) {
   containerStyle={{ width: '100%' }}
   thumbStyle={{ backgroundColor: 'white', shadowColor: 'black', shadowOpacity: 0.2, shadowOffset: { width: 4, height: 4 } }}
   minimumTrackTintColor={branColor.toString()}
-  onSlidingComplete={v => {
-    wbStore.getState().setStrokeWidth(v);
+  onSlidingComplete={r => {
+    if (typeof r == 'number') {
+      wbStore.getState().setStrokeWidth(r);
+    } else {
+      if (r.length > 0) {
+        wbStore.getState().setStrokeWidth(r[0]);
+      }
+    }
   }}
   />
 }
 
 function SubPanelSelectableApplianceButton(props: {
+  selected: boolean,
   appliance: Appliance,
   shape?: ApplianceShape
 }) {
   const key = props.shape ? props.shape : props.appliance;
-  const appliance = useStore(wbStore).appliance;
-  const shape = useStore(wbStore).shape;
-  let selected: boolean
-  if (props.shape) {
-    selected = shape === props.shape;
-  } else {
-    selected = appliance === props.appliance;
-  }
   return ImageSelectableButton({
     image: imageSources[key],
-    selected: selected,
+    selected: props.selected,
     onClick: () => {
       if (props.shape) {
         wbStore.getState().setShape(props.shape);
@@ -144,29 +142,10 @@ function PencilButton() {
       },
       width: '100%'
     })}
-    <View
-      style={[styles.subPanel, { display: useStore(wbStore).showPencilPanel ? 'flex' : 'none', }]}
-    >
-      <StrokeSlider width={wbStore(s=>s.strokeWidth)}/>
-      {defaultColors.map(c => <ColorButton color={c} key={c.toString()} />)}
-    </View>
   </View>
 }
 
 function ShapesButton() {
-  const shapes: {
-    appliance: Appliance,
-    shape?: ApplianceShape
-  }[] = [
-    {appliance: 'rectangle'},
-    {appliance: 'ellipse'},
-    {appliance: 'straight'},
-    {appliance: 'arrow'},
-    {appliance: 'shape', shape: 'pentagram'},
-    {appliance: 'shape', shape: 'rhombus'},
-    {appliance: 'shape', shape: 'speechBalloon'},
-    {appliance: 'shape', shape: 'triangle'}
-  ]
   const current = wbStore(s => s.appliance);
   const currenShape = wbStore(s => s.shape);
   let display: {appliance: Appliance, shape?: ApplianceShape}
@@ -177,47 +156,77 @@ function ShapesButton() {
   }
   return <View style={{ width: '100%' }}>
     <SingleSelectableApplianceButton appliance={display.appliance} shape={display.shape} />
-    <View
-      style={[styles.subPanel, { display: useStore(wbStore).showShapePanel ? 'flex' : 'none', }]}
-    >
-      {shapes.map(s => SubPanelSelectableApplianceButton(s))}
-      <StrokeSlider width={wbStore(s=>s.strokeWidth)}/>
-      {defaultColors.map(c => <ColorButton color={c} key={c.toString()}/>)}
-    </View>
   </View>
 }
 
 export function Panel(props: {style: StyleProp<ViewStyle>, store: WBStoreInstance}) {
     wbStore = props.store;
-    const floating = useFloating({
-        placement: 'top',
-        middleware: [shift()],
-      });
-                  {/* <View style={{backgroundColor: 'red'}}}> */}
-            // ref={floating.floating} style=
-            {/* <DeleteButton ></DeleteButton> */}
-            // </View>
 
+    const shapes: {
+      appliance: Appliance,
+      shape?: ApplianceShape
+    }[] = [
+      {appliance: 'rectangle'},
+      {appliance: 'ellipse'},
+      {appliance: 'straight'},
+      {appliance: 'arrow'},
+      {appliance: 'shape', shape: 'pentagram'},
+      {appliance: 'shape', shape: 'rhombus'},
+      {appliance: 'shape', shape: 'speechBalloon'},
+      {appliance: 'shape', shape: 'triangle'}
+    ]
+
+    const currentShape = wbStore(s => s.shape);
+    const currentAppliance = wbStore(s => s.appliance);
+    const showPencil = wbStore(s => s.showPencilPanel);
+    const storkeWidth = wbStore(s => s.strokeWidth);
+    const showShapePanel = wbStore(s => s.showShapePanel);
+    const strokeWidth = wbStore(s => s.strokeWidth);
       // <TouchableOpacity onPressIn={()=>wbStore.getState().hideAllSubPanel()} style={{width: '100%', height: '100%'}}>
       //   </TouchableOpacity>
       return (
-          <View style={props.style}>
-              <View 
-              ref={floating.floating} 
-              style={{...styles.controlBar, width: '100%', top: floating.y - 10, left: floating.x, position: 'absolute', display: wbStore(s=>s.showDelete) ? 'flex' : 'none'}
-              }>
+        <View style={props.style}>
+          <View>
+            {wbStore(s => s.showDelete) &&
+              (<View style={{...styles.controlBar, marginBottom: 6}}>
                 <ExecutionButton tintColor={'#ff0000'} image={imageSources.delete} onClick={() => wbStore.getState().delete()}></ExecutionButton>
-              </View>
-              <View ref={floating.reference} style={styles.controlBar}>
-                <SingleSelectableApplianceButton appliance={'clicker'} />
-                <SingleSelectableApplianceButton appliance={'selector'} />
-                <PencilButton/>
-                <SingleSelectableApplianceButton appliance={'text'} />
-                <SingleSelectableApplianceButton appliance={'eraser'} />
-                <ShapesButton />
-                <ExecutionButton tintColor={'#5D5D5D'} image={imageSources.clean} onClick={()=>wbStore.getState().clean()}/>
-              </View>
+              </View>)
+            }
+            <View style={styles.controlBar}>
+              <SingleSelectableApplianceButton appliance={'clicker'} />
+              <SingleSelectableApplianceButton appliance={'selector'} />
+              <PencilButton />
+              <SingleSelectableApplianceButton appliance={'text'} />
+              <SingleSelectableApplianceButton appliance={'eraser'} />
+              <ShapesButton />
+              <ExecutionButton tintColor={'#5D5D5D'} image={imageSources.clean} onClick={() => wbStore.getState().clean()} />
+            </View>
           </View>
+
+          {showPencil &&
+            (<View style={styles.subPanel} >
+              <StrokeSlider width={storkeWidth} />
+              {defaultColors.map(c => <ColorButton color={c} key={c.toString()} />)}
+            </View>)
+          }
+
+          {showShapePanel &&
+            (<View
+              style={styles.subPanel}
+            >
+              {shapes.map(p => {
+                if (p.shape) {
+                  return SubPanelSelectableApplianceButton({...p, selected: p.shape == currentShape});
+                } else {
+                  return SubPanelSelectableApplianceButton({...p, selected: p.appliance == currentAppliance});
+                }
+              }
+              )}
+              <StrokeSlider width={strokeWidth} />
+              {defaultColors.map(c => <ColorButton color={c} key={c.toString()} />)}
+            </View>)
+          }
+        </View>
       );
 }
 
@@ -235,6 +244,7 @@ const styles = StyleSheet.create({
       borderColor: '#ccc',
       borderRadius: 4,
       backgroundColor: 'white',
+      width: 44,
     },
     buttonContainer: {
       height: 44,
@@ -245,7 +255,6 @@ const styles = StyleSheet.create({
       borderColor: '#ccc',
       borderRadius: 4,
       backgroundColor: '#eee', width: 144,
-      position: 'absolute', top: 0, left: 54,
       padding: 6,
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -254,5 +263,6 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.3,
       shadowRadius: 10,
       shadowOffset: { width: 4, height: 4 },
+      margin: 6
     },
   });

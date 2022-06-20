@@ -50,7 +50,7 @@ export default function App() {
         sdkCallbacks={sdkCallbacks}
       />
       {
-        showPanel && <Panel style={{...styles.panel}} store={createWBStore({room, sdk})} />
+        showPanel && <Panel style={styles.panel} store={createWBStore({room, sdk})} />
       }
     </View>
   );
@@ -69,11 +69,11 @@ const styles = StyleSheet.create({
   },
   panel: {
     position: 'absolute',
-    backgroundColor: '#ff000000',
+    backgroundColor: '#00000000',
     left: 44,
-    width: 40,
     height: '100%',
-    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center',
   }
 });
 
