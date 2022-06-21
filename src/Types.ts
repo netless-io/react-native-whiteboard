@@ -16,18 +16,34 @@ import type {
     SceneDefinition,
     SceneState,
     WhiteScene,
-    AddPageParams
+    AddPageParams,
+    PlayerPhase,
+    PlayerState,
+    PlayerTimeInfo,
+    ObserverMode,
+    PlayerSeekingResult,
+    NativeReplayParams,
+    NativePlayerState
 } from '@netless/whiteboard-bridge-types';
 
 export type SDKConfig = NativeSDKConfig;
 export type RoomConfig = Omit<NativeJoinRoomParams, 'nativeWebSocket'>;
 
 export type WhiteboardViewProps = {
-    style: StyleProp<ViewStyle>,
+    style: StyleProp<ViewStyle>
     roomConfig: RoomConfig
     sdkConfig: SDKConfig
     joinRoomCallback: ((room?: Room, sdk?: SDK, error?: Error)=>void)
     roomCallbacks?: Partial<RoomCallbackHandler>
+    sdkCallbacks?: Partial<SDKCallbackHandler>
+}
+
+export type WhiteboardReplayViewProps = {
+    replayConfig: NativeReplayParams
+    sdkConfig: SDKConfig
+    style: StyleProp<ViewStyle>
+    replayRoomCallback: ((player?: RoomPlayer, sdk?: SDK, error?: Error)=>void)
+    replayCallbacks?: Partial<ReplayCallbackHandler>
     sdkCallbacks?: Partial<SDKCallbackHandler>
 }
 
@@ -133,6 +149,26 @@ export type RoomState = {
     debugInfo(): Promise<object>
 }
 
+export type RoomPlayer = PlayerStateInterface & PlayerAsyncInterface;
+
+export interface PlayerStateInterface {
+    roomUUID(): Promise<string>
+    phase(): Promise<PlayerPhase>
+    playerState(): Promise<PlayerState>
+    isPlayable(): Promise<boolean>
+    playbackSpeed(): Promise<number>
+    timeInfo(): Promise<PlayerTimeInfo>
+}
+
+export interface PlayerAsyncInterface {
+    play()
+    pause()
+    stop()
+    seekToScheduleTime(beginTime: number): Promise<PlayerSeekingResult>
+    setObserverMode(observerMode: ObserverMode)
+    setPlaybackSpeed(rate: number)
+}
+
 export interface SDK {
     registerApp(para: AppRegisterParams): Promise<void>
 }
@@ -156,5 +192,14 @@ export type RoomCallbackHandler = {
     onKickedWithReason(reason: string)
     onAttributesUpdate(attributes: object)
     onCatchErrorWhenAppendFrame(userId: number, error: Error)
+    onCatchErrorWhenRender(err: Error)
+}
+
+export type ReplayCallbackHandler = {
+    onPhaseChanged(phase: PlayerPhase)
+    onLoadFirstFrame()
+    onPlayerStateChanged(modifyState: Partial<NativePlayerState>)
+    onStoppedWithError(err: Error)
+    onProgressTimeChanged(scheduleTime: number)
     onCatchErrorWhenRender(err: Error)
 }
