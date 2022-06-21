@@ -47,11 +47,12 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@netless/react-native-bridge": "^0.0.6"
+    "@netless/whiteboard-bridge-types": "^0.1.3",
+    "@netless/react-native-bridge": "^0.0.6",
+    "react-native-webview": "^11.22.2"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",
-    "@netless/whiteboard-bridge-types": "^0.1.2",
     "@react-native-community/eslint-config": "^2.0.0",
     "@release-it/conventional-changelog": "^2.0.0",
     "@types/jest": "^26.0.0",
