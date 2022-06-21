@@ -4,9 +4,16 @@ interactive whiteboard for react-native
 
 ## Installation
 
+### 1. Add dependencies
+
 ```sh
-npm install @netless/react-native-whiteboard
+$ npm install --save react-native-webview
+$ npm install --save @netless/react-native-whiteboard
 ```
+
+### 2. Link native dependencies
+
+From react-native 0.60 autolinking will take care of the link step but don't forget to run pod install
 
 ## Usage
 
