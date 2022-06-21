@@ -1,17 +1,24 @@
 import * as React from 'react';
 import {  StyleSheet, View } from 'react-native';
-import { Room, WhiteboardView, SDK, SDKConfig, RoomCallbackHandler, SDKCallbackHandler } from 'react-native-whiteboard';
+import { Room, WhiteboardView, WhiteboardReplayView, RoomPlayer, SDK, SDKConfig, RoomCallbackHandler, SDKCallbackHandler } from '../../lib/module';
 import { Panel } from './Panel';
 import { createWBStore } from './WBStore';
-import { appIdentifier, roomToken, uid, userPayload, uuid } from './roomConst';
+import { appIdentifier, replayToken, replayUuid, roomToken, uid, userPayload, uuid } from './roomConst';
+import type { ReplayRoomParams } from 'white-web-sdk';
+import type { ReplayCallbackHandler } from 'react-native-whiteboard';
 
 let room: Room | undefined;
 let sdk: SDK | undefined;
 
 const sdkParams: SDKConfig = {log: true, userCursor: true, __platform: 'rn', appIdentifier, useMultiViews: true};
 const roomParams = {uuid, uid, roomToken, userPayload};
+const replayrParams: ReplayRoomParams = {
+  room: replayUuid,
+  roomToken: replayToken
+}
 
 const MemoWhiteboardView = React.memo(WhiteboardView);
+const MemoWhiteboardReplayView = React.memo(WhiteboardReplayView);
 
 const roomCallbacks: Partial<RoomCallbackHandler> = {
   onPhaseChanged: e=>console.log('state changed: ', e),
@@ -19,6 +26,10 @@ const roomCallbacks: Partial<RoomCallbackHandler> = {
 
 const sdkCallbacks: Partial<SDKCallbackHandler> = {
   onSetupFail: error=>console.log('setup fail: ', error)
+}
+
+const replayCallbacks: Partial<ReplayCallbackHandler> = {
+  onPhaseChanged: e=>console.log('player phas: ', e)
 }
 
 export default function App() {
@@ -34,6 +45,10 @@ export default function App() {
     }
   }, []);
 
+  const replayCallback = React.useCallback((player?: RoomPlayer, sdk?: SDK, error?: Error) => {
+    player.play();
+  }, []);
+
   return (
     <View style={styles.whiteboardContainer}>
       <MemoWhiteboardView
@@ -47,6 +62,15 @@ export default function App() {
       {
         showPanel && <Panel style={styles.panel} store={createWBStore({room, sdk})} />
       }
+      {/* <MemoWhiteboardReplayView 
+      replayConfig={replayrParams} 
+      sdkConfig={sdkParams}
+      style={styles.whiteboard}
+      replayRoomCallback={replayCallback}
+      replayCallbacks={replayCallbacks}
+      >
+      </MemoWhiteboardReplayView> */}
+      
     </View>
   );
 }
