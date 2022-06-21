@@ -16,28 +16,14 @@ import {
     RoomPhase, 
     SceneDefinition, 
     ImageInformation } from "@netless/whiteboard-bridge-types";
-import { assignFuncsFromNameSpace } from './BridgeGenerator';
+import { assignFuncsFromNameSpace, combineFuncsFromObjects } from './BridgeGenerator';
 
 export class RoomImplement implements Room {
     roomState: WhiteRoomState;
     constructor(props: {roomState: WhiteRoomState}) {
         this.roomState = props.roomState;
         const objs = [new RoomAsyncImp(), new RoomBridgeImp(), new RoomSyncImp(), new RoomPPTImp(), new RoomStateImp()];
-        const imps = objs.map ( obj => {
-            return { proto: obj, funcNames:  Object.getOwnPropertyNames(Object.getPrototypeOf(obj))};
-        });
-        
-        let proto = Object.getPrototypeOf(this);
-        const funcs = Object.getOwnPropertyNames(proto);
-        funcs.forEach(f => {
-            if (f == 'constructor') { return; }
-
-            imps.forEach(obj => {
-                if (obj.funcNames.find(name => name == f)) {
-                    proto[f] = obj.proto[f];
-                }
-            })
-        })
+        combineFuncsFromObjects(objs, this);
     }
 
     setWindowManagerAttributes(attributes: any) {

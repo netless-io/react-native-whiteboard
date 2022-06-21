@@ -16,3 +16,19 @@ export function assignFuncsFromNameSpace(s: string, obj: any, promiseList: strin
         }
     })
 }
+
+export function combineFuncsFromObjects(objs: object[], obj: object) {
+    const imps = objs.map ( obj => {
+        return { proto: obj, funcNames:  Object.getOwnPropertyNames(Object.getPrototypeOf(obj))};
+    });
+    let proto = Object.getPrototypeOf(obj);
+    const funcs = Object.getOwnPropertyNames(proto);
+    funcs.forEach(f => {
+        if (f == 'constructor') { return; }
+        imps.forEach(obj => {
+            if (obj.funcNames.find(name => name == f)) {
+                proto[f] = obj.proto[f];
+            }
+        })
+    })
+}
