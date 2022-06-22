@@ -2,6 +2,9 @@
 
 interactive whiteboard for react-native
 
+[![TSC](https://github.com/netless-io/react-native-whiteboard/actions/workflows/tsc.yml/badge.svg)](https://github.com/netless-io/react-native-whiteboard/actions/workflows/tsc.yml)
+[![pages-build-deployment](https://github.com/netless-io/react-native-whiteboard/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/netless-io/react-native-whiteboard/actions/workflows/pages/pages-build-deployment)
+
 ## Installation
 
 ### 1. Add dependencies
