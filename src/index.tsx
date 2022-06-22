@@ -52,6 +52,7 @@ export function WhiteboardView(props: WhiteboardViewProps) {
     {...defaultProps}
     style={props.style}
     ref={async (webView: RNWebView) => {
+      if (webView == undefined) { return }
       bridge.bind(webView);
       // 注册room handler.
       // 把fire替换成on
@@ -92,6 +93,7 @@ export function WhiteboardReplayView(props: WhiteboardReplayViewProps ) {
     {...defaultProps}
     style={props.style}
     ref={async (webView: RNWebView) => {
+      if (webView == undefined) { return }
       bridge.bind(webView);
 
       if (props.replayCallbacks) {
