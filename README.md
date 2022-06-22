@@ -32,9 +32,11 @@ import { WhiteboardView } from '@netless/react-native-whiteboard';
 />
 ```
 
+For more api details, can see typedoc [here](https://netless-io.github.io/react-native-whiteboard/)
+
 ## Contributing
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+Suggest to submit pr or issue.
 
 ## License
 
