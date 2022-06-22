@@ -29,7 +29,9 @@
     "release": "release-it",
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
-    "bootstrap": "yarn example && yarn && yarn pods"
+    "bootstrap": "yarn example && yarn && yarn pods",
+    "docs": "typedoc",
+    "check": "tsc"
   },
   "keywords": [
     "react-native",
@@ -70,6 +72,7 @@
     "react-native": "0.63.4",
     "react-native-builder-bob": "^0.18.0",
     "release-it": "^14.2.2",
+    "typedoc": "^0.22.17",
     "typescript": "^4.1.3"
   },
   "peerDependencies": {
