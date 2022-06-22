@@ -1,4 +1,4 @@
-import type { Room, RoomAsync, RoomBridge, RoomPPT, RoomState, RoomSync } from "../Types";
+import type { Room } from "../Types";
 import {
     EventEntry, 
     pptNamespace, 
@@ -15,7 +15,8 @@ import {
     BroadcastState, 
     RoomPhase, 
     SceneDefinition, 
-    ImageInformation } from "@netless/whiteboard-bridge-types";
+    ImageInformation, 
+    TeleBoxColorScheme} from "@netless/whiteboard-bridge-types";
 import { assignFuncsFromNameSpace, combineFuncsFromObjects } from './BridgeGenerator';
 
 export class RoomImplement implements Room {
@@ -129,16 +130,10 @@ export class RoomImplement implements Room {
     disconnect(): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    zoomChange(scale: number) {
-        throw new Error("Method not implemented.");
-    }
     disableCameraTransform(disableCamera: boolean) {
         throw new Error("Method not implemented.");
     }
     disableDeviceInputs(disable: boolean) {
-        throw new Error("Method not implemented.");
-    }
-    disableOperations(disableOperations: boolean) {
         throw new Error("Method not implemented.");
     }
     disableWindowOperation(disable: boolean) {
@@ -153,7 +148,7 @@ export class RoomImplement implements Room {
     moveScene(source: string, target: string) {
         throw new Error("Method not implemented.");
     }
-    insertText(x: number, y: number, textContent: string): Promise<Boolean> {
+    insertText(x: number, y: number, textContent: string): Promise<string> {
         throw new Error("Method not implemented.");
     }
     cleanScene(retainPpt: boolean) {
@@ -356,16 +351,10 @@ class RoomAsyncImp implements RoomAsync {
     disconnect(): Promise<void> {
         throw new Error("Method not implemented.");
     }
-    zoomChange(scale: number) {
-        throw new Error("Method not implemented.");
-    }
     disableCameraTransform(disableCamera: boolean) {
         throw new Error("Method not implemented.");
     }
     disableDeviceInputs(disable: boolean) {
-        throw new Error("Method not implemented.");
-    }
-    disableOperations(disableOperations: boolean) {
         throw new Error("Method not implemented.");
     }
     disableWindowOperation(disable: boolean) {
@@ -380,7 +369,7 @@ class RoomAsyncImp implements RoomAsync {
     moveScene(source: string, target: string) {
         throw new Error("Method not implemented.");
     }
-    insertText(x: number, y: number, textContent: string): Promise<Boolean> {
+    insertText(x: number, y: number, textContent: string): Promise<string> {
         throw new Error("Method not implemented.");
     }
     cleanScene(retainPpt: boolean) {
@@ -440,4 +429,86 @@ class RoomStateImp implements RoomState {
     debugInfo(): Promise<object> {
         throw new Error("Method not implemented.");
     }
+}
+
+type RoomBridge = {
+    setWindowManagerAttributes(attributes: any)
+    setContainerSizeRatio(ratio: number)
+    setPrefersColorScheme(scheme: TeleBoxColorScheme)
+}
+
+type RoomPPT = {
+    nextStep()
+    previousStep()
+}
+
+type RoomSync = {
+    syncBlockTimestamp(timeStamp)
+    disableSerialization(disable: boolean)
+    copy()
+    paste()
+    duplicate()
+    delete();
+    disableEraseImage(disable: boolean)
+}
+
+type RoomAsync = {
+    redo(): Promise<number>
+    undo(): Promise<number>
+    canRedoSteps(): Promise<number>
+    canUndoSteps(): Promise<number>
+    setGlobalState(modifyState: Partial<GlobalState>)
+    setScenePath(scenePath: string): Promise<string>
+    addPage(params: AddPageParams): Promise<void>
+    removePage(params: RemovePageParams): Promise<boolean>
+    nextPage(): Promise<boolean>
+    prevPage: Promise<boolean>
+    setMemberState(memberState: Partial<RoomMemberState>);
+    setViewMode(viewMode: string)
+    setWritable(writable: boolean): Promise<void>
+    getMemberState(): Promise<RoomMemberState>
+    getGlobalState(): Promise<GlobalState>
+    getSceneState(): Promise<SceneState>
+    getRoomMembers(): Promise<RoomMemberState>
+
+    setSceneIndex(index: number): Promise<void>
+    getScenes(): Promise<WhiteScene[]>
+    getZoomScale(): Promise<number>
+    getBroadcastState(): Promise<BroadcastState>
+    getRoomPhase(): Promise<RoomPhase>
+
+    disconnect(): Promise<void>
+
+    disableCameraTransform(disableCamera: boolean)
+    disableDeviceInputs(disable: boolean)
+    disableWindowOperation(disable: boolean)
+
+    putScenes(dir: string, scenes: SceneDefinition[], index: number): Promise<SceneState>
+    removeScenes(dirOrPath: string)
+
+    moveScene(source: string, target: string)
+
+    insertText(x: number, y: number, textContent: string): Promise<string>
+
+    cleanScene(retainPpt: boolean);
+    insertImage(imageInfo: ImageInformation)
+    completeImageUpload(uuid: string, url: string)
+
+    dispatchMagixEvent(event: EventEntry)
+    setTimeDelay(delay: number)
+
+    addApp(kind: string, options: any, attributes: any): Promise<string>
+    closeApp(appId: string): Promise<void>
+
+    getSyncedState(): Promise<object>
+    safeSetAttributes(attributes: any)
+    safeUpdateAttributes(keys: string[], attributes: any)
+}
+
+type RoomState = {
+    getRoomState(): Promise<WhiteRoomState>
+    getTimeDelay(): Promise<number>
+    getPhase(): Promise<RoomPhase>
+    isWritable(): Promise<boolean>
+    debugInfo(): Promise<object>
 }

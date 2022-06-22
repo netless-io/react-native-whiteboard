@@ -42,6 +42,11 @@ function registerSDKCallbacks(sdkCallbacks?: Partial<SDKCallbackHandler>) {
       }
 }
 
+/**
+ * Create a whiteboard view, it join room immediately
+ * @param props
+ * @returns a view contains a whiteboard
+ */
 export function WhiteboardView(props: WhiteboardViewProps) {
   return <RNWebView
     {...defaultProps}
@@ -77,6 +82,11 @@ export function WhiteboardView(props: WhiteboardViewProps) {
   />
 }
 
+/**
+ * Create a whiteboard replay view
+ * @param props
+ * @returns a view contains a whiteboard replayer
+ */
 export function WhiteboardReplayView(props: WhiteboardReplayViewProps ) {
   return <RNWebView
     {...defaultProps}

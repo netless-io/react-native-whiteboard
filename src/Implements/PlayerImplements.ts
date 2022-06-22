@@ -1,5 +1,5 @@
 import { ObserverMode, playerNameSpace, PlayerPhase, PlayerSeekingResult, PlayerState, playerStateNameSpace, PlayerTimeInfo } from "@netless/whiteboard-bridge-types";
-import type { RoomPlayer, PlayerAsyncInterface, PlayerStateInterface } from "src/Types";
+import type { RoomPlayer } from "src/Types";
 import { assignFuncsFromNameSpace, combineFuncsFromObjects } from "./BridgeGenerator";
 
 export class RoomPlayerImp implements RoomPlayer {
@@ -102,4 +102,22 @@ class PlayerAsyncImp implements PlayerAsyncInterface {
     setPlaybackSpeed(rate: number) {
         throw new Error("Method not implemented.");
     }
+}
+
+type PlayerStateInterface = {
+    roomUUID(): Promise<string>
+    phase(): Promise<PlayerPhase>
+    playerState(): Promise<PlayerState>
+    isPlayable(): Promise<boolean>
+    playbackSpeed(): Promise<number>
+    timeInfo(): Promise<PlayerTimeInfo>
+}
+
+type PlayerAsyncInterface = {
+    play()
+    pause()
+    stop()
+    seekToScheduleTime(beginTime: number): Promise<PlayerSeekingResult>
+    setObserverMode(observerMode: ObserverMode)
+    setPlaybackSpeed(rate: number)
 }
