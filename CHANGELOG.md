@@ -1,3 +1,5 @@
+### 0.0.5
+- PeereDpendencies for 'react-native-webview'
 ### 0.0.4
 - Fix ref callback error
 - Fix bridge type error
