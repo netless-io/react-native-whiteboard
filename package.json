@@ -49,7 +49,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@netless/react-native-bridge": "^0.0.6",
+    "@netless/react-native-bridge": "^0.0.7",
     "@netless/whiteboard-bridge-types": "^0.1.4",
     "react-native-webview": "^11.22.2"
   },
