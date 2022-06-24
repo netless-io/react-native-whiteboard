@@ -1618,9 +1618,9 @@
     value-enhancer "^0.0.8"
 
 "@netless/webview-bridge@^*":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@netless/webview-bridge/-/webview-bridge-0.0.9.tgz#ccf346d50e85660f79cc0d60a81177b7ef9aed68"
-  integrity sha512-psuqcq8tqIgT/eccsbKLPeEaTaUCUxx9Aw/dyTWXlyznffNz6y113V2I+WZCMwHUJCQzCEkmh+Sy1E65aKw+GA==
+  version "0.0.14"
+  resolved "https://registry.yarnpkg.com/@netless/webview-bridge/-/webview-bridge-0.0.14.tgz#93ad4f3e47ce3ec31e0fb4d4c6d54c0a6889c0e8"
+  integrity sha512-L6P/0kvqQNFAxHUmwpNQUwr8fa4NbILDh0Ph5gK7uU/klyWUP4sq9b1TzCfjtOY69D7ubWw9/5Ru6o1ddu6LTQ==
 
 "@netless/whiteboard-bridge-types@^0.1.4":
   version "0.1.4"

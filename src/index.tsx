@@ -3,7 +3,7 @@ import { WebView as RNWebView, WebViewProps } from 'react-native-webview';
 import { bridge } from '@netless/react-native-bridge';
 import { RoomImplement } from './Implements/RoomImplement';
 import type { SDKCallbackHandler, WhiteboardReplayViewProps, WhiteboardViewProps } from './Types';
-import type {  WhiteRoomState } from '@netless/whiteboard-bridge-types';
+import type {  NativeSDKConfig, WhiteRoomState } from '@netless/whiteboard-bridge-types';
 import { SDKImplement } from './Implements/SDKImplement';
 import { Platform } from 'react-native';
 import { RoomPlayerImp } from './Implements/PlayerImplements';
@@ -69,7 +69,8 @@ export function WhiteboardView(props: WhiteboardViewProps) {
 
       registerSDKCallbacks(props.sdkCallbacks);
 
-      bridge.call('sdk.newWhiteSdk', props.sdkConfig);
+      const sdkConfig: NativeSDKConfig = {...props.sdkConfig, __platform: 'rn'};
+      bridge.call('sdk.newWhiteSdk', sdkConfig);
       try {
         const rawState = await bridge.callAsync('sdk.joinRoom', props.roomConfig);
         const roomState = (JSON.parse(rawState) as any).state as WhiteRoomState;
@@ -104,7 +105,8 @@ export function WhiteboardReplayView(props: WhiteboardReplayViewProps ) {
       }
       registerSDKCallbacks(props.sdkCallbacks);
 
-      bridge.call('sdk.newWhiteSdk', props.sdkConfig);
+      const sdkConfig: NativeSDKConfig = {...props.sdkConfig, __platform: 'rn'};
+      bridge.call('sdk.newWhiteSdk', sdkConfig);
       try {
         await bridge.callAsync('sdk.replayRoom', props.replayConfig);
         props.replayRoomCallback(new RoomPlayerImp(), new SDKImplement(), undefined);
