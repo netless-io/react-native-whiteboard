@@ -1,3 +1,7 @@
+### 0.0.7
+- Modify prevPage from variable to function
+- Hide "__platform" text field
+- Update rect-native-bridge to 0.0.8
 ### 0.0.6
 - Update webview-bridge to 0.0.13
 ### 0.0.5
