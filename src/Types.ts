@@ -194,7 +194,7 @@ export interface Room {
     /**
      * Turn to previous page
      */
-    prevPage: Promise<boolean>
+    prevPage(): Promise<boolean>
 
     /**
      * Currently mainly used to update appliance

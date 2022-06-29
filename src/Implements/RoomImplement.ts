@@ -90,7 +90,9 @@ export class RoomImplement implements Room {
     nextPage(): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
-    prevPage: Promise<boolean>;
+    prevPage(): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
     setMemberState(memberState: Partial<RoomMemberState>) {
         throw new Error("Method not implemented.");
     }
@@ -311,7 +313,9 @@ class RoomAsyncImp implements RoomAsync {
     nextPage(): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
-    prevPage: Promise<boolean>;
+    prevPage(): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
     setMemberState(memberState: Partial<RoomMemberState>) {
         throw new Error("Method not implemented.");
     }
@@ -462,7 +466,7 @@ type RoomAsync = {
     addPage(params: AddPageParams): Promise<void>
     removePage(params: RemovePageParams): Promise<boolean>
     nextPage(): Promise<boolean>
-    prevPage: Promise<boolean>
+    prevPage(): Promise<boolean>
     setMemberState(memberState: Partial<RoomMemberState>);
     setViewMode(viewMode: string)
     setWritable(writable: boolean): Promise<void>
