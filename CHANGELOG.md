@@ -1,3 +1,6 @@
+### 0.0.8
+Breaking Change
+  - Update SDKCallbackHandler & RoomCallbackHandler
 ### 0.0.7
 - Modify prevPage from variable to function
 - Hide "__platform" text field
