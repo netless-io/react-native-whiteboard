@@ -3,7 +3,7 @@ import { WebView as RNWebView, WebViewProps } from 'react-native-webview';
 import { Bridge } from '@netless/react-native-bridge';
 import { RoomImplement } from './Implements/RoomImplement';
 import type { SDKCallbackHandler, WhiteboardReplayViewProps, WhiteboardViewProps } from './Types';
-import type {  NativeSDKConfig, WhiteRoomState } from '@netless/whiteboard-bridge-types';
+import type { NativeSDKConfig, WhiteRoomState } from '@netless/whiteboard-bridge-types';
 import { SDKImplement } from './Implements/SDKImplement';
 import { Platform } from 'react-native';
 import { RoomPlayerImp } from './Implements/PlayerImplements';
@@ -26,22 +26,31 @@ function defaultProps(bridge: Bridge): WebViewProps {
 }
 
 function registerSDKCallbacks(bridge: Bridge, sdkCallbacks?: Partial<SDKCallbackHandler>) {
-      // 注册sdk handler.
-      // 除了pptmedia以外，把on抛掉
-      if (sdkCallbacks) {
-        const names = Object.getOwnPropertyNames(sdkCallbacks);
-        names.forEach((name) => {
-          const exceptName = ['onPPTMediaPlay', 'onPPTMediaPause'];
-          let registerName = name;
+  // 注册sdk handler.
+  // 除了pptmedia以外，把on抛掉
+  if (sdkCallbacks) {
+    const names = Object.getOwnPropertyNames(sdkCallbacks);
+    names.forEach((name) => {
+      const exceptName = ['onPPTMediaPlay', 'onPPTMediaPause'];
+      let registerName = name;
 
-          if (!exceptName.find(item => item == name)) {
-            if (name.startsWith('on')) {
-              registerName = name.slice(2);
-            }
-          }
-          bridge.register('sdk.' + registerName, sdkCallbacks[name]);
-        });
+      if (!exceptName.find(item => item == name)) {
+        if (name.startsWith('on')) {
+          registerName = name.slice(2);
+        }
       }
+
+      bridge.register('sdk.' + registerName, (para) => {
+        // 因为现在无法获取类型，所以这里通过一次json尝试来判断类型
+        try {
+          const obj = JSON.parse(para);
+          sdkCallbacks[name](obj);
+        } catch (error) {
+          sdkCallbacks[name](para);
+        }
+      });
+    });
+  }
 }
 
 /**
@@ -66,13 +75,21 @@ export function WhiteboardView(props: WhiteboardViewProps) {
           if (name.startsWith('on')) {
             registerName = 'fire' + name.slice(2);
           }
-          bridge.register('room.' + registerName, props.roomCallbacks[name]);
+          bridge.register('room.' + registerName, (para) => {
+            // 因为现在无法获取类型，所以这里通过一次json尝试来判断类型
+            try {
+              const obj = JSON.parse(para);
+              props.roomCallbacks[name](obj);
+            } catch (error) {
+              props.roomCallbacks[name](para);
+            }
+          });
         });
       }
 
       registerSDKCallbacks(bridge, props.sdkCallbacks);
 
-      const sdkConfig: NativeSDKConfig = {...props.sdkConfig, __platform: 'rn'};
+      const sdkConfig: NativeSDKConfig = { ...props.sdkConfig, __platform: 'rn' };
       bridge.call('sdk.newWhiteSdk', sdkConfig);
       try {
         const rawState = await bridge.callAsync('sdk.joinRoom', props.roomConfig);
@@ -92,7 +109,7 @@ export function WhiteboardView(props: WhiteboardViewProps) {
  * @param props
  * @returns a view contains a whiteboard replayer
  */
-export function WhiteboardReplayView(props: WhiteboardReplayViewProps ) {
+export function WhiteboardReplayView(props: WhiteboardReplayViewProps) {
   const bridge = new Bridge();
 
   return <RNWebView
@@ -105,12 +122,20 @@ export function WhiteboardReplayView(props: WhiteboardReplayViewProps ) {
       if (props.replayCallbacks) {
         const names = Object.getOwnPropertyNames(props.replayCallbacks);
         names.forEach((name) => {
-          bridge.register('player.' + name, props.replayCallbacks[name]);
+          bridge.register('player.' + name, (para) => {
+            // 因为现在无法获取类型，所以这里通过一次json尝试来判断类型
+            try {
+              const obj = JSON.parse(para);
+              props.replayCallbacks[name](obj);
+            } catch (error) {
+              props.replayCallbacks[name](para);
+            }
+          });
         });
       }
       registerSDKCallbacks(bridge, props.sdkCallbacks);
 
-      const sdkConfig: NativeSDKConfig = {...props.sdkConfig, __platform: 'rn'};
+      const sdkConfig: NativeSDKConfig = { ...props.sdkConfig, __platform: 'rn' };
       bridge.call('sdk.newWhiteSdk', sdkConfig);
       try {
         await bridge.callAsync('sdk.replayRoom', props.replayConfig);
@@ -120,7 +145,7 @@ export function WhiteboardReplayView(props: WhiteboardReplayViewProps ) {
         return;
       }
     }}
-    />
+  />
 }
 
 export * from './Types';

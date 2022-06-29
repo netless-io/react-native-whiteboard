@@ -465,12 +465,12 @@ export type SDKCallbackHandler = {
     /**
      * Playback of audio and video callbacks in dynamic PPT
      */
-    onPPTMediaPlay(shapeId: string, type: MediaType)
+    onPPTMediaPlay(info: {shapeId: string, type: MediaType})
 
     /**
      * Pause playback of audio and video callbacks in dynamic PPTs.
      */
-    onPPTMediaPause(shapeId: string, type: MediaType)
+    onPPTMediaPause(info: {shapeId: string, type: MediaType})
 }
 
 export type RoomCallbackHandler = {
@@ -498,7 +498,7 @@ export type RoomCallbackHandler = {
      * Callback for broken connection between Whiteboard SDK and Whiteboard server.
      * @param error error info for dicconnect.
      */
-    onDisconnectWithError(error: Error)
+    onDisconnectWithError(error: string)
 
     /**
      * The user is moved out of the room by the server callback.
@@ -515,7 +515,7 @@ export type RoomCallbackHandler = {
      *
      * **Note:** This callback is usually ignored, and you can decide for yourself whether to listen to it or not depending on the business situation.
      */
-    onCatchErrorWhenAppendFrame(userId: number, error: Error)
+    onCatchErrorWhenAppendFrame(info: {userId: number, error: string})
 }
 
 export type ReplayCallbackHandler = {
