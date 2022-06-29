@@ -1596,10 +1596,10 @@
   resolved "https://registry.yarnpkg.com/@netless/canvas-polyfill/-/canvas-polyfill-0.0.4.tgz#b5f28eefeb9c1e8ff8253fa1b044ccb1dc1b7c9c"
   integrity sha512-7NzsJrba0R/mq/l10SkIZQwbrNVJyPxZYrjK6xL3Ts732iWAVuS2UB0u3s6iGeUVcqV39A679yva8APWRl4M0A==
 
-"@netless/react-native-bridge@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@netless/react-native-bridge/-/react-native-bridge-0.0.7.tgz#3e29bedf7d31c32074c1e9ea142f3f1d886755d5"
-  integrity sha512-moe2V3c/7mHayJnxWUPEvk2EurP5m+a8dupnJDX3lrxp/KQghJQa2yOc/zpDINLIubwZiaWohsjTR2Fx4S+jPw==
+"@netless/react-native-bridge@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/@netless/react-native-bridge/-/react-native-bridge-0.0.8.tgz#7c1ee486e6f6feddcbf67ed19a31e725ae2ab869"
+  integrity sha512-zPt28QXDjbwcZ/Y3721wW7kD6CERJcOHxhA/t7ORHlXUQPenLcC7ushtJR+yHVyQp/sCnhNP9tzWJOqW5ktvdQ==
   dependencies:
     "@netless/webview-bridge" "^*"
     react-native-uuid "^2.0.1"
