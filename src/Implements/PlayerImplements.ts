@@ -1,10 +1,11 @@
+import type { Bridge } from "@netless/react-native-bridge";
 import { ObserverMode, playerNameSpace, PlayerPhase, PlayerSeekingResult, PlayerState, playerStateNameSpace, PlayerTimeInfo } from "@netless/whiteboard-bridge-types";
 import type { RoomPlayer } from "src/Types";
 import { assignFuncsFromNameSpace, combineFuncsFromObjects } from "./BridgeGenerator";
 
 export class RoomPlayerImp implements RoomPlayer {
-    constructor() {
-        const objs = [new PlayerStateImp(), new PlayerAsyncImp()];
+    constructor(bridge: Bridge) {
+        const objs = [new PlayerStateImp(bridge), new PlayerAsyncImp(bridge)];
         combineFuncsFromObjects(objs, this);
     }
     roomUUID(): Promise<string> {
@@ -46,8 +47,8 @@ export class RoomPlayerImp implements RoomPlayer {
 }
 
 class PlayerStateImp implements PlayerStateInterface {
-    constructor() {
-        assignFuncsFromNameSpace(playerStateNameSpace, this, [
+    constructor(bridge: Bridge) {
+        assignFuncsFromNameSpace(playerStateNameSpace, this, bridge, [
         'roomUUID',
         'phase',
         'playerState',
@@ -78,8 +79,8 @@ class PlayerStateImp implements PlayerStateInterface {
 }
 
 class PlayerAsyncImp implements PlayerAsyncInterface {
-    constructor() {
-        assignFuncsFromNameSpace(playerNameSpace, this, [
+    constructor(bridge: Bridge) {
+        assignFuncsFromNameSpace(playerNameSpace, this, bridge, [
             'seekToScheduleTime'
         ])
     }

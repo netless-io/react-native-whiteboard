@@ -18,12 +18,18 @@ import {
     ImageInformation, 
     TeleBoxColorScheme} from "@netless/whiteboard-bridge-types";
 import { assignFuncsFromNameSpace, combineFuncsFromObjects } from './BridgeGenerator';
+import type { Bridge } from "@netless/react-native-bridge";
 
 export class RoomImplement implements Room {
     roomState: WhiteRoomState;
-    constructor(props: {roomState: WhiteRoomState}) {
+    constructor(props: {roomState: WhiteRoomState, bridge: Bridge}) {
         this.roomState = props.roomState;
-        const objs = [new RoomAsyncImp(), new RoomBridgeImp(), new RoomSyncImp(), new RoomPPTImp(), new RoomStateImp()];
+        const objs = [
+            new RoomAsyncImp(props.bridge), 
+            new RoomBridgeImp(props.bridge), 
+            new RoomSyncImp(props.bridge), 
+            new RoomPPTImp(props.bridge), 
+            new RoomStateImp(props.bridge)];
         combineFuncsFromObjects(objs, this);
     }
 
@@ -201,8 +207,8 @@ export class RoomImplement implements Room {
 }
 
 class RoomBridgeImp implements RoomBridge {
-    constructor() {
-        assignFuncsFromNameSpace(roomNamespace, this, []);
+    constructor(bridge: Bridge) {
+        assignFuncsFromNameSpace(roomNamespace, this, bridge, []);
     }
     setWindowManagerAttributes(attributes: any) {
         throw new Error("Method not implemented.");
@@ -216,8 +222,8 @@ class RoomBridgeImp implements RoomBridge {
 }
 
 class RoomPPTImp implements RoomPPT {
-    constructor() {
-        assignFuncsFromNameSpace(pptNamespace, this, []);
+    constructor(bridge: Bridge) {
+        assignFuncsFromNameSpace(pptNamespace, this, bridge, []);
     }
     nextStep() {
         throw new Error("Method not implemented.");
@@ -228,8 +234,8 @@ class RoomPPTImp implements RoomPPT {
 }
 
 class RoomSyncImp implements RoomSync {
-    constructor() {
-        assignFuncsFromNameSpace(roomSyncNamespace, this, []);
+    constructor(bridge: Bridge) {
+        assignFuncsFromNameSpace(roomSyncNamespace, this, bridge, []);
     }
     syncBlockTimestamp(timeStamp: any) {
         throw new Error("Method not implemented.");
@@ -255,7 +261,7 @@ class RoomSyncImp implements RoomSync {
 }
 
 class RoomAsyncImp implements RoomAsync {
-    constructor() {
+    constructor(bridge: Bridge) {
         const promiseList = 
             [
                 'redo',
@@ -284,7 +290,7 @@ class RoomAsyncImp implements RoomAsync {
                 'closeApp',
                 'getSyncedState'
             ];
-        assignFuncsFromNameSpace(roomNamespace, this, promiseList);
+        assignFuncsFromNameSpace(roomNamespace, this, bridge, promiseList);
     }
     redo(): Promise<number> {
         throw new Error("Method not implemented.");
@@ -409,8 +415,8 @@ class RoomAsyncImp implements RoomAsync {
 }
 
 class RoomStateImp implements RoomState {
-    constructor() {
-        assignFuncsFromNameSpace(roomStateNamespace, this, [
+    constructor(bridge: Bridge) {
+        assignFuncsFromNameSpace(roomStateNamespace, this, bridge, [
             'getRoomState',
             'getTimeDelay',
             'getPhase',

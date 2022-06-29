@@ -1,6 +1,6 @@
-import { bridge } from "@netless/react-native-bridge";
+import type { Bridge } from "@netless/react-native-bridge";
 
-export function assignFuncsFromNameSpace(s: string, obj: any, promiseList: string[]) {
+export function assignFuncsFromNameSpace(s: string, obj: any, bridge: Bridge, promiseList: string[]) {
     let proto = Object.getPrototypeOf(obj);
     const funcs = Object.getOwnPropertyNames(proto);
 

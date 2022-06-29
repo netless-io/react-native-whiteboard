@@ -30,12 +30,17 @@ import type {
 /**
  * See SDKConfig in source code
  */
-export type SDKConfig = NativeSDKConfig;
+export type SDKConfig = Omit<NativeSDKConfig, '__platform'>;
 
 /**
  * See RoomConfig in source code
  */
 export type RoomConfig = Omit<NativeJoinRoomParams, 'nativeWebSocket'>;
+
+/**
+ * See PlayerConfig in source code
+ */
+export type PlayerConfig = NativeReplayParams;
 
 /**
  * Create whiteboardView props

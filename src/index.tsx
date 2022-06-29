@@ -1,6 +1,6 @@
 import React from 'react';
 import { WebView as RNWebView, WebViewProps } from 'react-native-webview';
-import { bridge } from '@netless/react-native-bridge';
+import { Bridge } from '@netless/react-native-bridge';
 import { RoomImplement } from './Implements/RoomImplement';
 import type { SDKCallbackHandler, WhiteboardReplayViewProps, WhiteboardViewProps } from './Types';
 import type {  NativeSDKConfig, WhiteRoomState } from '@netless/whiteboard-bridge-types';
@@ -9,21 +9,23 @@ import { Platform } from 'react-native';
 import { RoomPlayerImp } from './Implements/PlayerImplements';
 
 const source = Platform.OS == 'ios' ? { uri: 'Whiteboard.bundle/index.html' } : { uri: "file:///android_asset/Resource/index.html" }
-const defaultProps: WebViewProps = {
-  source: source,
-  originWhitelist: ['*'],
-  allowFileAccessFromFileURLs: true,
-  allowUniversalAccessFromFileURLs: true,
-  allowingReadAccessToURL: "*",
-  onLoadEnd: () => {
-    bridge.ready();
-  },
-  onMessage: (event) => {
-    bridge.recv(event.nativeEvent.data);
+function defaultProps(bridge: Bridge): WebViewProps {
+  return {
+    source: source,
+    originWhitelist: ['*'],
+    allowFileAccessFromFileURLs: true,
+    allowUniversalAccessFromFileURLs: true,
+    allowingReadAccessToURL: "*",
+    onLoadEnd: () => {
+      bridge.ready();
+    },
+    onMessage: (event) => {
+      bridge.recv(event.nativeEvent.data);
+    }
   }
 }
 
-function registerSDKCallbacks(sdkCallbacks?: Partial<SDKCallbackHandler>) {
+function registerSDKCallbacks(bridge: Bridge, sdkCallbacks?: Partial<SDKCallbackHandler>) {
       // 注册sdk handler.
       // 除了pptmedia以外，把on抛掉
       if (sdkCallbacks) {
@@ -48,8 +50,9 @@ function registerSDKCallbacks(sdkCallbacks?: Partial<SDKCallbackHandler>) {
  * @returns a view contains a whiteboard
  */
 export function WhiteboardView(props: WhiteboardViewProps) {
+  const bridge = new Bridge();
   return <RNWebView
-    {...defaultProps}
+    {...defaultProps(bridge)}
     style={props.style}
     ref={async (webView: RNWebView) => {
       if (webView == undefined) { return }
@@ -67,14 +70,14 @@ export function WhiteboardView(props: WhiteboardViewProps) {
         });
       }
 
-      registerSDKCallbacks(props.sdkCallbacks);
+      registerSDKCallbacks(bridge, props.sdkCallbacks);
 
       const sdkConfig: NativeSDKConfig = {...props.sdkConfig, __platform: 'rn'};
       bridge.call('sdk.newWhiteSdk', sdkConfig);
       try {
         const rawState = await bridge.callAsync('sdk.joinRoom', props.roomConfig);
         const roomState = (JSON.parse(rawState) as any).state as WhiteRoomState;
-        props.joinRoomCallback(new RoomImplement({ roomState }), new SDKImplement(), undefined);
+        props.joinRoomCallback(new RoomImplement({ roomState, bridge }), new SDKImplement(bridge), undefined);
       } catch (error) {
         props.joinRoomCallback(undefined, undefined, error);
         return;
@@ -90,8 +93,10 @@ export function WhiteboardView(props: WhiteboardViewProps) {
  * @returns a view contains a whiteboard replayer
  */
 export function WhiteboardReplayView(props: WhiteboardReplayViewProps ) {
+  const bridge = new Bridge();
+
   return <RNWebView
-    {...defaultProps}
+    {...defaultProps(bridge)}
     style={props.style}
     ref={async (webView: RNWebView) => {
       if (webView == undefined) { return }
@@ -103,13 +108,13 @@ export function WhiteboardReplayView(props: WhiteboardReplayViewProps ) {
           bridge.register('player.' + name, props.replayCallbacks[name]);
         });
       }
-      registerSDKCallbacks(props.sdkCallbacks);
+      registerSDKCallbacks(bridge, props.sdkCallbacks);
 
       const sdkConfig: NativeSDKConfig = {...props.sdkConfig, __platform: 'rn'};
       bridge.call('sdk.newWhiteSdk', sdkConfig);
       try {
         await bridge.callAsync('sdk.replayRoom', props.replayConfig);
-        props.replayRoomCallback(new RoomPlayerImp(), new SDKImplement(), undefined);
+        props.replayRoomCallback(new RoomPlayerImp(bridge), new SDKImplement(bridge), undefined);
       } catch (error) {
         props.replayRoomCallback(undefined, undefined, error);
         return;
