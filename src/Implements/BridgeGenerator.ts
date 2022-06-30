@@ -9,7 +9,7 @@ export function assignFuncsFromNameSpace(s: string, obj: any, bridge: Bridge, pr
         Object.getPrototypeOf(obj)[f] = (...args) => {
             const method = s + '.' + f;
             if (promiseList.find(item => item == f)) {
-                return bridge.callAsync(method);
+                return bridge.callAsync(method, ...args);
             } else {
                 return bridge.call(method, ...args);
             }
