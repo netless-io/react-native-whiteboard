@@ -9,6 +9,7 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@floating-ui/react-native": "^0.7.1",
     "@miblanchard/react-native-slider": "^2.1.0",
     "react": "16.13.1",
     "react-native": "0.63.4",

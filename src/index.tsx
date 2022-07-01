@@ -8,6 +8,7 @@ import { SDKImplement } from './Implements/SDKImplement';
 import { Platform } from 'react-native';
 import { RoomPlayerImp } from './Implements/PlayerImplements';
 
+// const source = { uri: 'http://10.6.0.31:8080/'}
 const source = Platform.OS == 'ios' ? { uri: 'Whiteboard.bundle/index.html' } : { uri: "file:///android_asset/Resource/index.html" }
 function defaultProps(bridge: Bridge): WebViewProps {
   return {
@@ -63,6 +64,8 @@ export function WhiteboardView(props: WhiteboardViewProps) {
   return <RNWebView
     {...defaultProps(bridge)}
     style={props.style}
+    onStartShouldSetResponder={props.onStartShouldSetResponder || (() => true)}
+    children={props.children}
     ref={async (webView: RNWebView) => {
       if (webView == undefined) { return }
       bridge.bind(webView);

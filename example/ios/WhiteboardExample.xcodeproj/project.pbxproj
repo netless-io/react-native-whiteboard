@@ -137,7 +137,6 @@
 				47F7ED3B7971BE374F7B8635 /* Pods-WhiteboardExample.debug.xcconfig */,
 				E00ACF0FDA8BF921659E2F9A /* Pods-WhiteboardExample.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -556,6 +555,7 @@
 				PRODUCT_NAME = WhiteboardExample;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -577,6 +577,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.reactnativewhiteboard;
 				PRODUCT_NAME = WhiteboardExample;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

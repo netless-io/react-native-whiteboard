@@ -1,4 +1,4 @@
-import type { StyleProp, ViewStyle } from "react-native";
+import type { GestureResponderEvent, StyleProp, ViewStyle } from "react-native";
 import type { 
     AppRegisterParams,
     EventEntry,
@@ -70,6 +70,16 @@ export type WhiteboardViewProps = {
      * SDK state change callbacks
      */
     sdkCallbacks?: Partial<SDKCallbackHandler>
+
+    /**
+     * Child nodes
+     */
+    children?: React.ReactNode
+
+    /**
+     * Gesture life cycle for menu interaction
+     */
+    onStartShouldSetResponder?: (evebt: GestureResponderEvent) => boolean
 }
 
 /**

@@ -23,8 +23,6 @@ android {
     defaultConfig {
         minSdkVersion safeExtGet('Whiteboard_minSdkVersion', 16)
         targetSdkVersion safeExtGet('Whiteboard_targetSdkVersion', 29)
-        versionCode 1
-        versionName "1.0"
 
     }
 

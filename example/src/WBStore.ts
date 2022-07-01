@@ -2,101 +2,130 @@ import type { Room, SDK } from 'react-native-whiteboard';
 import create, { StoreApi, UseBoundStore } from 'zustand';
 import { defaultColors, isShape } from './WhiteboardConfig';
 import type { Appliance, ApplianceShape } from '@netless/whiteboard-bridge-types';
+import { rgbToHex } from './utility';
 
-function stringToNums(str: string): number[] {
-  var sColor = str.toLowerCase();
-  var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
-  if (sColor && reg.test(sColor)) {
-      if (sColor.length === 4) {
-          var sColorNew = "#";
-          for (var i=1; i<4; i+=1) {
-              sColorNew += sColor.slice(i, i+1).concat(sColor.slice(i, i+1));    
-          }
-          sColor = sColorNew;
-      }
-      var sColorChange = [];
-      for (var i=1; i<7; i+=2) {
-          sColorChange.push(parseInt("0x"+sColor.slice(i, i+2)));    
-      }
-      return sColorChange;
-  }
-  return [];
-};
+export type AppliancePair = {appliance: Appliance, shape: ApplianceShape | undefined};
 
 export interface WBStore {
-    appliance: Appliance
-    setAppliance: (newAppliance: Appliance) => void
-    color: string,
-    setColor: (newColor: string) => void
-    strokeWidth: number,
+    applianceAndShape: AppliancePair | undefined
+    setApplianceAndShape: (value: AppliancePair | undefined) => void
+    strokeColor: string
+    setStrokeColor: (newColor: string) => void
+    textColor: string
+    setTextColor: (newColor: string) => void
+    strokeWidth: number
     setStrokeWidth: (width: number) => void
+    pageState: {index: number, length: number}
+    setPageState: (info: {index: number, length: number}) => void
+    prePageEnable: boolean
+    nextPageEnable: boolean
+    undoEnable: boolean
+    setUndoEnable: (enable: boolean) => void
+    redoEnable: boolean
+    setRedoEnable: (enable: boolean) => void
+
+    showCompactPanel: boolean
+    setShowCompactPanel: (show: boolean) => void
+    showTextPanel: boolean
     showPencilPanel: boolean
     showShapePanel: boolean
     showDelete: boolean
-    shape: ApplianceShape | undefined
-    setShape: (shape: ApplianceShape | undefined) => void
     hideAllSubPanel: () => void
-    clean: () => void
-    delete: () => void
+
+    didInitialize: boolean
+    initializeWithRoom:(room: Room) => void
 }
 
 export type WBStoreInstance = UseBoundStore<StoreApi<WBStore>>;
 
-export function createWBStore(props: {room: Room, sdk: SDK}) {
-  const room = props.room;
-  const sdk = props.sdk;
-  let shape: ApplianceShape | undefined
-  const initAppliance = props.room.roomState.memberState.currentApplianceName;
-  if (props.room.roomState.memberState.currentApplianceName == 'shape') {
-    shape = props.room.roomState.memberState.shapeType ?? 'triangle';
-  }  else {
-    shape = undefined
-  }
-  const wbStore = create<WBStore>(set => ({
-    appliance: initAppliance,
-    setAppliance: (newAppliance) => {
-      const isPencil = newAppliance == 'pencil';
-      set({
-        appliance: newAppliance,
-        showPencilPanel: isPencil,
-        showShapePanel: isShape(newAppliance),
-        showDelete: newAppliance === 'selector',
-        shape: undefined,
-      })
-      room.setMemberState({currentApplianceName: newAppliance})
-    },
-    color: defaultColors[0],
-    setColor: (newColor) => {
-      const nums = stringToNums(newColor);
-      room.setMemberState({strokeColor: nums, textColor: nums})
-      set({ color: newColor })
-    },
+export function createWBStore(): UseBoundStore<StoreApi<WBStore>> {
+  return create<WBStore>((set, get) => ({
+    applianceAndShape: {appliance: undefined, shape: undefined},
+    setApplianceAndShape: undefined,
+    strokeColor: defaultColors[0],
+    setStrokeColor: undefined as any,
+    textColor: undefined,
+    setTextColor: undefined as any,
     strokeWidth: 0,
-    setStrokeWidth: (width) => {
-      room.setMemberState({strokeWidth: width})
-      set({strokeWidth: width})
-    },
+    setStrokeWidth: undefined as any,
+    pageState: {index: 0, length: 0},
+    setPageState: undefined as any,
+    prePageEnable: false,
+    nextPageEnable: false,
+    undoEnable: false,
+    setUndoEnable: undefined as any,
+    redoEnable: false,
+    setRedoEnable: undefined as any,
+
+    showCompactPanel: false,
+    setShowCompactPanel: (show: boolean) => set({showCompactPanel: show}),
+    showTextPanel: false,
     showPencilPanel: false,
     showShapePanel: false,
     showDelete: false,
-    shape: shape,
-    setShape: (shape) => {
-      if (shape) {
-        wbStore.getState().setAppliance('shape');
+    hideAllSubPanel: () => set({showCompactPanel: false, showTextPanel: false, showPencilPanel: false, showShapePanel: false}),
+
+    didInitialize: false,
+
+    initializeWithRoom: (room) => {
+      let initShape: ApplianceShape | undefined
+      const initAppliance = room.roomState.memberState.currentApplianceName;
+      const initStrokeWidth = room.roomState.memberState.strokeWidth;
+      if (room.roomState.memberState.currentApplianceName == 'shape') {
+        initShape = room.roomState.memberState.shapeType ?? 'triangle';
+      } else {
+        initShape = undefined
       }
-      room.setMemberState({shapeType: shape})
-      set({shape})
+
+      const initializeStrokeColorNums = room.roomState.memberState.strokeColor;
+      const initStrokeColor = initializeStrokeColorNums && rgbToHex(initializeStrokeColorNums[0], initializeStrokeColorNums[1], initializeStrokeColorNums[2])
+      const initializeTextColorNums = room.roomState.memberState.textColor;
+      const initTextColor = initializeTextColorNums && rgbToHex(initializeTextColorNums[0], initializeTextColorNums[1], initializeTextColorNums[2])
+
+      set({
+        didInitialize: true,
+        applianceAndShape: {appliance: initAppliance, shape: initShape},
+        setApplianceAndShape: (applianceAndShape) => {
+          const oldApplianceShape = get().applianceAndShape;
+          const isNewApplianceShape = isShape(applianceAndShape.appliance);
+          const isOldApplianceShape = isShape(oldApplianceShape.appliance);
+          const isSame = applianceAndShape.appliance == oldApplianceShape.appliance && applianceAndShape.shape == oldApplianceShape.shape;
+          let shouldShowShapePanel: boolean;
+          if (isNewApplianceShape) {
+            if (isOldApplianceShape) {
+              if (isSame) {
+                shouldShowShapePanel = !get().showShapePanel;
+              } else {
+                shouldShowShapePanel = true;
+              }
+            } else {
+              shouldShowShapePanel = true;
+            }
+          } else {
+            shouldShowShapePanel = false;
+          }
+
+          set({
+            applianceAndShape,
+            showPencilPanel: applianceAndShape.appliance == 'pencil' ? !get().showPencilPanel : false,
+            showDelete: applianceAndShape.appliance == 'selector',
+            showShapePanel: shouldShowShapePanel,
+            showTextPanel: applianceAndShape.appliance == 'text' ? !get().showTextPanel : false
+          })
+        },
+        strokeColor: initStrokeColor ?? defaultColors[0],
+        setStrokeColor: (newColor) => set({ strokeColor: newColor }),
+        textColor: initTextColor ?? defaultColors[0],
+        setTextColor: (newColor) => set({ textColor: newColor }),
+        strokeWidth: initStrokeWidth,
+        setStrokeWidth: (width) => set({strokeWidth: width}),
+        pageState: {index: room.roomState.pageState.index, length: room.roomState.pageState.length},
+        setPageState: (info) => set({pageState: info, prePageEnable: info.index > 0, nextPageEnable: info.index < info.length - 1}),
+        prePageEnable: room.roomState.pageState.index > 0,
+        nextPageEnable: room.roomState.pageState.index < room.roomState.pageState.length - 1,
+        setRedoEnable: (enable) => set({redoEnable: enable}),
+        setUndoEnable: (enable) => set({undoEnable: enable})
+      })
     },
-    hideAllSubPanel: () => {
-      console.log('hide all');
-      set({ showDelete: false, showPencilPanel: false, showShapePanel: false })
-    },
-    clean: () => {
-      room.cleanScene(true);
-    },
-    delete: () => {
-      room.delete();
-    }
   }));
-  return wbStore;
 }

@@ -18,4 +18,10 @@ export const imageSources: { [key: string]: any } = {
     speechBalloon: require('./assets/speechBalloon.png'),
 
     text: require('./assets/textFilled.png'),
+
+    undo: require('./assets/undo.png'),
+    redo: require('./assets/redo.png'),
+    prev: require('./assets/prev.png'),
+    next: require('./assets/next.png'),
+    whiteboardAdd: require('./assets/whiteboardAdd.png')
 }

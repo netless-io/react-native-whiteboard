@@ -1,4 +1,5 @@
-import type { Appliance } from "@netless/whiteboard-bridge-types";
+import type { Appliance, ApplianceShape } from "@netless/whiteboard-bridge-types";
+import type { AppliancePair } from "./WBStore";
 
 export function isShape(appliance: Appliance) {
     switch (appliance) {
@@ -23,3 +24,14 @@ export const defaultColors: string[] = [
     "#9E51B6",
     "#6D7278",
 ];
+
+export const shapes: AppliancePair[] = [
+    { appliance: 'rectangle', shape: undefined },
+    { appliance: 'ellipse', shape: undefined },
+    { appliance: 'straight', shape: undefined },
+    { appliance: 'arrow', shape: undefined },
+    { appliance: 'shape', shape: 'pentagram' },
+    { appliance: 'shape', shape: 'rhombus' },
+    { appliance: 'shape', shape: 'speechBalloon' },
+    { appliance: 'shape', shape: 'triangle' }
+]
