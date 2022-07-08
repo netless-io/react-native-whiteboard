@@ -9,11 +9,11 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "@floating-ui/react-native": "^0.7.1",
     "@miblanchard/react-native-slider": "^2.1.0",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-webview": "^11.22.2",
+    "white-web-sdk": "^2.16.26",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {

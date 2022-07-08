@@ -10,17 +10,15 @@ export default function App() {
 
   return (
     <View style={styles.whiteboardContainer}>
-      {/* {(!showRoom && !showPlayer) &&
+      {(!showRoom && !showPlayer) &&
         <View style={styles.buttonContainer}>
           <Button title='Live Room' onPress={() => setShowRoom(!showRoom)}></Button>
           <Button title='Player' onPress={() => setShowPlayer(!showPlayer)}></Button>
         </View>
-      } */}
+      }
             
-      {/* { showRoom && <WhiteRoom leaveRoomHandler={()=>setShowRoom(false)}/>}
-      { showPlayer && <WhitePlayer leaveHandler={()=>setShowPlayer(false)}/>} */}
-      <WhiteRoom leaveRoomHandler={()=>setShowRoom(false)}/>
-
+      { showPlayer && <WhitePlayer leaveHandler={()=>setShowPlayer(false)}/>}
+      {showRoom && <WhiteRoom/>}
     </View>
   );
 }
@@ -28,14 +26,15 @@ export default function App() {
 const styles = StyleSheet.create({
   buttonContainer: {
     flex: 1, 
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   whiteboardContainer: {
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'black',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // justifyContent: 'center',
+    // alignItems: 'flex-end',
     paddingVertical: '5%'
   },
 });

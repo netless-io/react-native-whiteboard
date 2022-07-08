@@ -1044,10 +1044,17 @@
     pirates "^4.0.5"
     source-map-support "^0.5.16"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.18.3", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.11.2", "@babel/runtime@^7.8.4":
   version "7.18.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.3.tgz#c7b654b57f6f63cf7f8b418ac9ca04408c4579f4"
   integrity sha512-38Y8f7YUhce/K7RMwTp7m0uCumpv9hZkitCbBClqQIow1qSbCvGkcegKOXpEWCQLfWmevgRiWokZ1GkpfhbZug==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.18.6", "@babel/runtime@^7.5.5":
+  version "7.18.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.6.tgz#6a1ef59f838debd670421f8c7f2cbb8da9751580"
+  integrity sha512-t9wi7/AW6XtKahAe20Yw0/mMljKq0B1r2fPdvaAdV/KPDZewFXdaaa6K7lxmZBZ8FBNpCiAT6iHPmd6QO9bKfQ==
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -1605,7 +1612,7 @@
     react-native-uuid "^2.0.1"
     react-native-webview "^11.22.2"
 
-"@netless/telebox-insider@0.2.26":
+"@netless/telebox-insider@*", "@netless/telebox-insider@0.2.26":
   version "0.2.26"
   resolved "https://registry.yarnpkg.com/@netless/telebox-insider/-/telebox-insider-0.2.26.tgz#cc6dd229a5131225855b5780f3c180ed27534fbb"
   integrity sha512-HOBi9HWK0Zf0nvzfjM0V/0QmZ69ec7L/lCKMwRcfiQHxAAJ/zo9fEm468WocYFsliixWW5L7HwMN0eHb0mw7hA==
@@ -1622,19 +1629,13 @@
   resolved "https://registry.yarnpkg.com/@netless/webview-bridge/-/webview-bridge-0.0.14.tgz#93ad4f3e47ce3ec31e0fb4d4c6d54c0a6889c0e8"
   integrity sha512-L6P/0kvqQNFAxHUmwpNQUwr8fa4NbILDh0Ph5gK7uU/klyWUP4sq9b1TzCfjtOY69D7ubWw9/5Ru6o1ddu6LTQ==
 
-"@netless/whiteboard-bridge-types@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@netless/whiteboard-bridge-types/-/whiteboard-bridge-types-0.1.4.tgz#37cc4960967bfc13e69f62bc84d352f06dbe3223"
-  integrity sha512-mEVYRGR8XkvRAFlF6oMCH52eU0IJRb/bC5szypKB2KW1dQb43neDxSnQDllHYu7Hk8w7aLgM4qZ/kFP78klZvA==
-  dependencies:
-    "@netless/telebox-insider" "0.2.26"
-    "@netless/window-manager" "^0.4.32"
-    white-web-sdk "^2.16.24"
+"@netless/whiteboard-bridge-types@file:../bridge-project/packages/whiteboard-bridge-types":
+  version "0.1.6"
 
-"@netless/window-manager@^0.4.32":
-  version "0.4.32"
-  resolved "https://registry.yarnpkg.com/@netless/window-manager/-/window-manager-0.4.32.tgz#c93fb95e949a0a8b798b47e8f63fc4627f4fac5d"
-  integrity sha512-EQG+K08p2D0StDFp4x9+5Gr2pZnb8bQqTIEmrReYDu6GHJxMeqCxDp9ogJJeaHsg4T9QJcrE8BU+rIvjeHqxiw==
+"@netless/window-manager@*":
+  version "0.4.35"
+  resolved "https://registry.yarnpkg.com/@netless/window-manager/-/window-manager-0.4.35.tgz#d643418cd4f99cb41577eaa024792dd59631582a"
+  integrity sha512-boO+978awQ2Drbw4LmKVl5hRWXDeblPJuhIL+2kSizQjN0oay1EifWa9l7K9Be5lJBHysCzAwjV15T2M06jSjA==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@netless/telebox-insider" "0.2.26"
@@ -2127,9 +2128,9 @@
   integrity sha512-Q5BPGyGKcvQgAMbsr7qEGN/kIPN6zZecYYABeTDBizOsau+2NMdSVTar9UQw21A2+JyA2KRNDYaYrPB0Rpk2oQ==
 
 "@types/node@>=13.7.0":
-  version "18.0.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.0.tgz#67c7b724e1bcdd7a8821ce0d5ee184d3b4dd525a"
-  integrity sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==
+  version "18.0.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.3.tgz#463fc47f13ec0688a33aec75d078a0541a447199"
+  integrity sha512-HzNRZtp4eepNitP+BD6k2L6DROIDG4Q0fm4x+dwfsr6LGmROENnok75VGw40628xf+iR24WeMFcHuuBDUAzzsQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -2899,6 +2900,11 @@ bl@^4.1.0:
     inherits "^2.0.4"
     readable-stream "^3.4.0"
 
+bowser@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/bowser/-/bowser-2.11.0.tgz#5ca3c35757a7aa5771500c70a73a9f91ef420a8f"
+  integrity sha512-AlcaJBi/pqqJBIQ8U9Mcpc9i8Aqxn88Skv5d+xBX006BY5u8N3mGLHa5Lgppa7L/HfwgwLgZ6NYs+Ag6uUmJRA==
+
 boxen@^5.0.0:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/boxen/-/boxen-5.1.2.tgz#788cb686fc83c1f486dfa8a40c68fc2b831d2b50"
@@ -3638,9 +3644,9 @@ core-js@^2.4.1:
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-js@^3.15.2:
-  version "3.23.2"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.23.2.tgz#e07a60ca8b14dd129cabdc3d2551baf5a01c76f0"
-  integrity sha512-ELJOWxNrJfOH/WK4VJ3Qd+fOqZuOuDNDJz0xG6Bt4mGg2eO/UT9CljCrbqDGovjLKUrGajEEBcoTOc0w+yBYeQ==
+  version "3.23.3"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.23.3.tgz#3b977612b15da6da0c9cc4aec487e8d24f371112"
+  integrity sha512-oAKwkj9xcWNBAvGbT//WiCdOMpb9XQG92/Fe3ABFM/R16BsHgePG00mFOgKf7IsCtfj8tA1kHtf/VwErhriz5Q==
 
 core-js@^3.6.1:
   version "3.23.0"
@@ -6922,11 +6928,11 @@ marked@^4.0.16:
   integrity sha512-Wfk0ATOK5iPxM4ptrORkFemqroz0ZDxp5MWfYA7H/F+wO17NRWV5Ypxi6p3g2Xmw2bKeiYOl6oVnLHKxBA0VhA==
 
 mathjs@^10.1.1:
-  version "10.6.1"
-  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-10.6.1.tgz#95b34178eed65cbf7a63d35c468ad3ac912f7ddf"
-  integrity sha512-8iZp6uUKKBoCFoUHze9ydsrSji9/IOEzMhwURyoQXaLL1+ILEZnraw4KzZnUBt/XN6lPJPV+7JO94oil3AmosQ==
+  version "10.6.4"
+  resolved "https://registry.yarnpkg.com/mathjs/-/mathjs-10.6.4.tgz#1b87a1268781d64f0c8b4e5e1b36cf7ecf58bb05"
+  integrity sha512-omQyvRE1jIy+3k2qsqkWASOcd45aZguXZDckr3HtnTYyXk5+2xpVfC3kATgbO2Srjxlqww3TVdhD0oUdZ/hiFA==
   dependencies:
-    "@babel/runtime" "^7.18.3"
+    "@babel/runtime" "^7.18.6"
     complex.js "^2.1.1"
     decimal.js "^10.3.1"
     escape-latex "^1.2.0"
@@ -7320,9 +7326,9 @@ mkdirp@^0.5.1:
     minimist "^1.2.6"
 
 mobx@^6.3.2:
-  version "6.6.0"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-6.6.0.tgz#617ca1f3b745a781fa89c5eb94a773e3cbeff8ae"
-  integrity sha512-MNTKevLH/6DShLZcmSL351+JgiJPO56A4GUpoiDQ3/yZ0mAtclNLdHK9q4BcQhibx8/JSDupfTpbX2NZPemlRg==
+  version "6.6.1"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-6.6.1.tgz#70ee6aa82f25aeb7e7d522bd621207434e509318"
+  integrity sha512-7su3UZv5JF+ohLr2opabjbUAERfXstMY+wiBtey8yNAPoB8H187RaQXuhFjNkH8aE4iHbDWnhDFZw0+5ic4nGQ==
 
 modify-values@^1.0.0:
   version "1.0.1"
@@ -10266,16 +10272,17 @@ which@^2.0.1, which@^2.0.2:
   dependencies:
     isexe "^2.0.0"
 
-white-web-sdk@^2.16.24:
-  version "2.16.24"
-  resolved "https://registry.yarnpkg.com/white-web-sdk/-/white-web-sdk-2.16.24.tgz#1ae862a8bc4551857e643eb9d084c060d243e865"
-  integrity sha512-onauWjDLcoOHN5lELmV8vjGU5Mrgi3KaWxI6obciMPQXDrzUPljyosRUPqC0i5BM+xn3oIn8s53yX+J/IOtAKA==
+white-web-sdk@*:
+  version "2.16.26"
+  resolved "https://registry.yarnpkg.com/white-web-sdk/-/white-web-sdk-2.16.26.tgz#78c4b2334ea46bd4cf17eb162114096ebe150179"
+  integrity sha512-cAVqNEWlt3Eo+P7YQKpzvpyWV9d/eSvYQSD16ORf5B04SQXmERI+cmxDbG7HaoV+3mYqCxwwe2EZB8dgnWXAdg==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
     "@netless/canvas-polyfill" "^0.0.4"
     "@netless/xml-js" "1.6.15"
     atob "^2.1.2"
     bezier-js "^2.4.4"
+    bowser "^2.11.0"
     color "^3.1.0"
     core-js "^3.15.2"
     detect-it "^3.0.5"

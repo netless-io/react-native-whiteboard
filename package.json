@@ -50,7 +50,10 @@
   },
   "dependencies": {
     "@netless/react-native-bridge": "^0.0.8",
-    "@netless/whiteboard-bridge-types": "^0.1.4"
+    "@netless/whiteboard-bridge-types": "file:/Users/xuyunshi/Desktop/Whiteboard/bridge-project/packages/whiteboard-bridge-types",
+    "@netless/window-manager": "*",
+    "@netless/telebox-insider": "*",
+    "white-web-sdk": "*"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^11.0.0",

@@ -1,5 +1,5 @@
 import type { Appliance, ApplianceShape } from "@netless/whiteboard-bridge-types";
-import type { AppliancePair } from "./WBStore";
+import type { AppliancePair } from "./store/panelStateStore";
 
 export function isShape(appliance: Appliance) {
     switch (appliance) {

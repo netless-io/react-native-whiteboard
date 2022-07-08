@@ -1,5 +1,5 @@
 import { Slider } from '@miblanchard/react-native-slider';
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   StyleSheet,
@@ -8,7 +8,20 @@ import {
   ImageSourcePropType,
   TouchableOpacity,
 } from 'react-native';
-import { branColor } from './WhiteboardConfig';
+import { branColor } from '../whiteboardConfig';
+
+export function CompactColorButton(props: {color: string, onPress: () => void}) {
+  return <TouchableOpacity
+  onPress={props.onPress}
+  style={{
+    borderRadius: 4,
+    aspectRatio: 1,
+    padding: 12,
+    height: 44
+  }}>
+  <View style={{ backgroundColor: props.color, width: '100%', height: '100%', borderRadius: 4 }} />
+  </TouchableOpacity>
+}
 
 export function ColorButton(props: { color: string, selected: boolean, onPress: () => void}) {
   return <TouchableOpacity
@@ -26,17 +39,14 @@ export function ColorButton(props: { color: string, selected: boolean, onPress: 
 }
 
 export function ExecutionButton(props: { image: ImageSourcePropType, onPress: () => void, tintColor?: string, disabled?: boolean, width?: string | number}) {
-  const [press, setPress] = useState(false);
-
   const disabled = props.disabled || false;
   const tintColor = props.tintColor || '#000000';
-  const color: string = (press || disabled) ? (tintColor + '50') : tintColor;
-  const width = props.width ?? styles.buttonContainer.width;
+  const color: string = disabled ? (tintColor + '50') : tintColor;
+  const width = props.width ?? 44;
   return (<TouchableOpacity
+    disabled={disabled}
     style={{...styles.buttonContainer, width}}
-    onPressIn={() => !disabled && setPress(true)}
-    onPressOut={() => !disabled && setPress(false)}
-    onPress={() => !disabled && props.onPress()}
+    onPress={() => props.onPress()}
     key={props.image.toString()}
   >
     <Image
@@ -56,14 +66,14 @@ declare interface ImageSelectableProps {
 
 export function ImageSelectableButton(props: ImageSelectableProps) {
     const { image, selected, onPress, width } = props;
-    const textColor = selected ? branColor : '#5D5D5D';
+    const tintColor = selected ? branColor : '#5D5D5D';
     return (<TouchableOpacity
       style={[styles.buttonContainer, { width }]}
       onPress={onPress}
     >
       <Image
         source={image}
-        style={{ tintColor: textColor, alignSelf: 'center' }}
+        style={{ tintColor: tintColor, alignSelf: 'center' }}
       />
     </TouchableOpacity>)
 }
@@ -91,7 +101,7 @@ export function StrokeSlider(props: { width: number, onSlidingComplete: (width: 
 const styles = StyleSheet.create({
   buttonContainer: {
     height: 44,
-    width: 44,
     justifyContent: 'center',
+    backgroundColor: '#00000000',
   },
 });
