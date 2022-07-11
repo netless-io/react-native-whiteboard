@@ -21,9 +21,7 @@ function defaultProps(bridge: Bridge): WebViewProps {
     onLoadEnd: () => {
       bridge.ready();
     },
-    onMessage: (event) => {
-      bridge.recv(event.nativeEvent.data);
-    }
+    onMessage: (event) => bridge.recv(event.nativeEvent.data)
   }
 }
 
@@ -65,6 +63,7 @@ export function WhiteboardView(props: WhiteboardViewProps) {
   return <RNWebView
     {...defaultProps(bridge)}
     style={props.style}
+    onStartShouldSetResponder={props.onStartShouldSetResponder || (() => true)}
     ref={async (webView: RNWebView) => {
       if (webView == undefined) { return }
       bridge.bind(webView);
