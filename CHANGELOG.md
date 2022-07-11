@@ -1,3 +1,7 @@
+### 0.0.10
+- Update whiteboard-bridge-types to 0.1.6
+- Disable scroll
+- Add startResponder
 ### 0.0.9
 - Fix lost return value when async call with parameters
 ### 0.0.8
