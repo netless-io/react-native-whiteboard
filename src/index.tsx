@@ -16,6 +16,8 @@ function defaultProps(bridge: Bridge): WebViewProps {
     allowFileAccessFromFileURLs: true,
     allowUniversalAccessFromFileURLs: true,
     allowingReadAccessToURL: "*",
+    scrollEnabled: false,
+    bounces: false,
     onLoadEnd: () => {
       bridge.ready();
     },
