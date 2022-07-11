@@ -2,8 +2,6 @@ import * as React from 'react';
 import {  Button, StyleSheet, View } from 'react-native';
 import { WhiteboardView, WhiteboardReplayView } from '../../lib/module';
 import type { Room, RoomPlayer, SDK, SDKConfig, RoomCallbackHandler, SDKCallbackHandler } from '../../lib/typescript/index';
-import { Panel } from './Panel';
-import { createWBStore } from './WBStore';
 import { appIdentifier, replayToken, replayUuid, roomToken, uid, userPayload, uuid } from './roomConst';
 import type { ReplayRoomParams } from 'white-web-sdk';
 import type { ReplayCallbackHandler } from 'react-native-whiteboard';
@@ -12,7 +10,7 @@ let room: Room | undefined;
 let roomPlayer: RoomPlayer | undefined;
 let sdk: SDK | undefined;
 
-const sdkParams: SDKConfig = {log: true, userCursor: true, __platform: 'rn', appIdentifier, useMultiViews: true};
+const sdkParams: SDKConfig = {log: true, userCursor: true, appIdentifier, useMultiViews: true};
 const roomParams = {uuid, uid, roomToken, userPayload};
 const replayrParams: ReplayRoomParams = {
   room: replayUuid,
@@ -37,15 +35,12 @@ const replayCallbacks: Partial<ReplayCallbackHandler> = {
 export default function App() {
   const [showRoom, setShowRoom] = React.useState<Boolean>(false);
   const [showPlayer, setShowPlayer] = React.useState<Boolean>(false);
-  const [showPanel, setShowPanel] = React.useState<Boolean>(false);
 
   const joinRoomCallback = React.useCallback((aRoom, aSdk, error) => {
     room = aRoom;
     sdk = aSdk;
     if (error) {
       console.log(error);
-    } else {
-      setShowPanel(true);
     }
   }, []);
 
@@ -72,16 +67,6 @@ export default function App() {
             sdkCallbacks={sdkCallbacks}
           />
       }
-      { showPanel && <Panel style={styles.panel} store={createWBStore({ room, sdk })} /> }
-      { showPanel && <Button title='Leave Room' onPress={async ()=> {
-        try {
-          await room.disconnect();
-          setShowPanel(false);
-          setShowRoom(false);
-        } catch(error) {
-          console.log(error)
-        }
-      }}/>}
 
       {showPlayer && <MemoWhiteboardReplayView
         replayConfig={replayrParams}
@@ -120,14 +105,6 @@ const styles = StyleSheet.create({
   whiteboard: {
     aspectRatio: 16.0/9.0,
     flexGrow: 1
-  },
-  panel: {
-    position: 'absolute',
-    backgroundColor: '#00000000',
-    left: 44,
-    height: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
   }
 });
 
