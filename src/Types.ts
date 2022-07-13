@@ -442,18 +442,6 @@ export type SDKCallbackHandler = {
     onLogger(args: any)
 
     /**
-     * Image interception callback.
-     * 
-     * *Note:** 
- 
-     *   - To trigger this callback, you must set `enableInterrupterAPI(YES)` to enable image interception replacement when initializing the Whiteboard SDK. See WhiteSdkConfiguration for details.
-     *   - When image intercept replacement is enabled, this callback will be triggered when inserting an image or scene in the whiteboard.
-     * @param url The original address of the image.
-     * @return The address of the replaced image.
-     */
-    onUrlInterrupter(url: string): string
-
-    /**
      * SDK initialization failure callback.
      *
      * If the SDK initialization fails, the call to join a live room or playback room will remain unresponsive and the SDK will need to be reinitialized.
