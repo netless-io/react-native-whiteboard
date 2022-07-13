@@ -1,3 +1,5 @@
+### 0.0.11
+- Remove `onUrlInterrupter`
 ### 0.0.10
 - Update whiteboard-bridge-types to 0.1.6
 - Disable scroll
