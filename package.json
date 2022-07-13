@@ -1,6 +1,6 @@
 {
   "name": "@netless/react-native-whiteboard",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "interactive whiteboard for react-native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
