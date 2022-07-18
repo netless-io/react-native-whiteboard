@@ -21,7 +21,8 @@ function defaultProps(bridge: Bridge): WebViewProps {
     onLoadEnd: () => {
       bridge.ready();
     },
-    onMessage: (event) => bridge.recv(event.nativeEvent.data)
+    onMessage: (event) => bridge.recv(event.nativeEvent.data),
+    allowsInlineMediaPlayback: true
   }
 }
 
