@@ -499,11 +499,6 @@ export type RoomCallbackHandler = {
     onKickedWithReason(reason: string)
 
     /**
-     * SyncedStoreState updated, state is the entire content of SyncedState
-     */
-    onAttributesUpdate(attributes: object)
-
-    /**
      * Synchronized user behavior error callback.
      *
      * **Note:** This callback is usually ignored, and you can decide for yourself whether to listen to it or not depending on the business situation.
