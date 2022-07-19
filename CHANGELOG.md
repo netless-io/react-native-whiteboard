@@ -1,3 +1,7 @@
+### 0.0.13
+- Update bridge resource to f2595bf
+### 0.0.12
+- set `allowsInlineMediaPlayback` to true
 ### 0.0.11
 - Remove `onUrlInterrupter`
 ### 0.0.10
