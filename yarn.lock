@@ -1629,10 +1629,10 @@
   resolved "https://registry.yarnpkg.com/@netless/webview-bridge/-/webview-bridge-0.0.14.tgz#93ad4f3e47ce3ec31e0fb4d4c6d54c0a6889c0e8"
   integrity sha512-L6P/0kvqQNFAxHUmwpNQUwr8fa4NbILDh0Ph5gK7uU/klyWUP4sq9b1TzCfjtOY69D7ubWw9/5Ru6o1ddu6LTQ==
 
-"@netless/whiteboard-bridge-types@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@netless/whiteboard-bridge-types/-/whiteboard-bridge-types-0.1.6.tgz#e9f1c86416ecbcc02ab4c402bae8d71f33f8c607"
-  integrity sha512-8aLOgmjw38xbxTEMgiQn3Vx8BH+CHvjVQ0oTXhQBtFz8alWdkrFQ7n1+p0TV/21l5zzvuND6HHCurHoN7hus3w==
+"@netless/whiteboard-bridge-types@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/@netless/whiteboard-bridge-types/-/whiteboard-bridge-types-0.1.8.tgz#0ac91786f0eed973d5d2beb8699e5a26453e1800"
+  integrity sha512-Lr0vi5D0Eqq96qcGeOAzDSY1l6ZP4pncnKBClqt9eSkrCRZz8Crz6PGJmMNmIrqNQ8EvNpjASzrPQnSPJ5MU4w==
 
 "@netless/window-manager@*":
   version "0.4.35"
