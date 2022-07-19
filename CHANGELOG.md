@@ -1,3 +1,5 @@
+### 0.0.14
+- Update whiteboard-bridge-types to 0.1.8
 ### 0.0.13
 - Update bridge resource to f2595bf
 ### 0.0.12
