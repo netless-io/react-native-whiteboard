@@ -32,6 +32,9 @@ import { WhiteboardView } from '@netless/react-native-whiteboard';
         uuid: 'some-uuid', 
         roomToken: 'some-token'
     }}
+    joinRoomCallback={joinRoomCallback}
+    roomCallbacks={roomCallbacks}
+    sdkCallbacks={sdkCallbacks}
 />
 ```
 
